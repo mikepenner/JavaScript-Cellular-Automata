@@ -1,0 +1,52 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+  <title>Cellular Automaton</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+  <script type="text/javascript" src="ca.js"></script> 
+  <script type="text/javascript">
+    function setFields(stateCount,birthStates,survivalStates) {
+	  document.getElementById("id.stateCount").value = stateCount;
+	  document.getElementById("id.birthStates").value = birthStates;
+	  document.getElementById("id.survivalStates").value = survivalStates;
+    }
+    function readParams() {
+      stateCount = document.getElementById("id.stateCount").value;
+      birthStates = document.getElementById("id.birthStates").value.split(",");
+      survivalStates = document.getElementById("id.survivalStates").value.split(",");
+    }
+    function togglePause() {
+      isPaused = !isPaused;
+	  label = document.getElementById("id.pauseResume").innerText = isPaused ? "Resume" : "Pause";
+    }
+	function restart() {
+      isPaused=true;
+      togglePause();
+      readParams();
+      init();
+	}
+  </script>
+</head> 
+<body onLoad="init();"> 
+  <div style="font-family: sans-serif; font-size: 16px; font-weight: 900;">
+    <span style="font-size: 32px;">
+      <span style="background-color: #ff8888;" onclick="restart();">Restart</span>
+      <span style="background-color: #ff8888;" onclick="togglePause();" id="id.pauseResume";>Pause</span>
+      <span style="background-color: #ff8888; display: none;" onclick="crop();" id="id.crop">Crop</span>
+    </span>
+    <span style="font-size: 24px;">
+      <span style="background-color: #ffaaaa;" onclick="setFields(4,'2','3,4,5');readParams();init();">Star Wars</span>
+      <span style="background-color: #ffaaaa;" onclick="setFields(2,'3','2,3');readParams();init();">Conway's Life</span>
+      <span style="background-color: #ffaaaa;" onclick="setFields(8,'2,3','2');readParams();init();">RainZha</span>
+    </span>
+    <span style="font-size: 16px;">
+      <span style="background-color: #ffdddd;">StateCount<input id="id.stateCount" size="1" value="4" /></span>
+      <span style="background-color: #ffdddd;">BirthStates<input id="id.birthStates" size="2" value="2" /></span> 
+      <span style="background-color: #ffdddd;">SurvivalStates<input id="id.survivalStates" size="2" value="3,4,5" /></span>
+    </span>
+  </div>
+  <div id="canvas-container" style="width: 1200; height: 80px;"> 
+    <canvas id="id.caCanvas" onmousedown="mousedown();" onmouseup="mouseup();"></canvas> 
+  </div> 
+</body> 
+</html> 
